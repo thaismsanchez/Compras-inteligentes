@@ -5,9 +5,14 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-cred = credentials.Certificate("firebase_config.json")
+import os
+import json
+
+firebase_config = json.loads(os.environ["FIREBASE_CONFIG"])
+cred = credentials.Certificate(firebase_config)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
+
 
 CATEGORIAS = [
     "Laticínios", "Hortifruti", "Carnes", "Mercearia", 
