@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Preços</title>
+</head>
+<body>
+  <h1>Menor Preço por Item</h1>
+  <table border="1">
+    <tr>
+      <th>Item</th>
+      <th>Local mais barato</th>
+      <th>Preço (R$)</th>
+    </tr>
+    {% for item, (local, valor) in menores.items() %}
+    <tr>
+      <td>{{ item }}</td>
+      <td>{{ local }}</td>
+      <td>{{ "%.2f" | format(valor) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <a href="/">Voltar ao cadastro</a>
+</body>
+</html>

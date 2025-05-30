@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Compras Inteligente</title>
+</head>
+<body>
+  <h1>Lista de Compras Otimizada</h1>
+  <form method="POST">
+    <label>Digite os itens separados por vírgula:<br>
+      <textarea name="itens" rows="4" cols="50">{{ lista_itens }}</textarea>
+    </label><br>
+    <button type="submit">Buscar melhores preços</button>
+  </form>
+
+  {% if sugestoes %}
+  <h2>Sugestões de Locais:</h2>
+  <table border="1">
+    <tr>
+      <th>Item</th>
+      <th>Local Sugerido</th>
+      <th>Preço (R$)</th>
+    </tr>
+    {% for item, (local, valor) in sugestoes.items() %}
+    <tr>
+      <td>{{ item }}</td>
+      <td>{{ local }}</td>
+      <td>{{ "%.2f" | format(valor) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  <br>
+  <a href="/">Voltar ao cadastro</a>
+</body>
+</html>

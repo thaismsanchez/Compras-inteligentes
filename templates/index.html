@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Compra</title>
+</head>
+<body>
+  <h1>Registrar Nova Compra</h1>
+  <form action="/adicionar" method="POST">
+    <label>Item: <input type="text" name="item" required></label><br>
+    <label>Categoria:
+      <select name="categoria">
+        {% for cat in categorias %}
+          <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
+      </select>
+    </label><br>
+    <label>Valor (R$): <input type="text" name="valor" required></label><br>
+    <label>Local da Compra: <input type="text" name="local" required></label><br>
+    <label>Data: <input type="date" name="data" required></label><br>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <hr>
+  <a href="/relatorio">Ver relatório de menor preço</a><br>
+  <a href="/lista">Lista de compras otimizada</a>
+</body>
+</html>
