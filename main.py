@@ -1,4 +1,4 @@
-rom flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
