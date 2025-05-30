@@ -80,5 +80,22 @@ def lista():
 
     return render_template("lista.html", sugestoes=sugestoes, lista_itens=request.form.get("itens", ""))
 
+@app.route("/pesquisa", methods=["GET", "POST"])
+def pesquisa():
+    resultados = []
+    produto = ""
+
+    if request.method == "POST":
+        produto = request.form.get("produto", "").strip().lower()
+        if produto:
+            compras = db.collection("compras").stream()
+            for c in compras:
+                d = c.to_dict()
+                # Comparar com o nome do produto (minusculo)
+                if d["item"].lower() == produto:
+                    resultados.append(d)
+
+    return render_template("pesquisa.html", resultados=resultados, produto=produto)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
