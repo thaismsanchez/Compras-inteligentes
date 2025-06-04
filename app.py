@@ -23,9 +23,6 @@ CATEGORIAS = [
 def index():
     return render_template("index.html", categorias=CATEGORIAS)
 
-from flask import render_template, request
-from models import Compra  # ou o nome correto do seu modelo
-
 @app.route('/tabela')
 def tabela():
     filtro_item = request.args.get("item", "").lower()
@@ -60,8 +57,6 @@ def tabela():
 
     return render_template('tabela.html', compras=compras)
 
-
-
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
     item = request.form["item"]
@@ -75,7 +70,7 @@ def adicionar():
         "categoria": categoria,
         "valor": valor,
         "local": local,
-        "data": data
+        "data": data.strftime('%Y-%m-%d')  # Salvar data como string
     })
     return redirect("/")
 
