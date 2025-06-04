@@ -23,6 +23,11 @@ CATEGORIAS = [
 def index():
     return render_template("index.html", categorias=CATEGORIAS)
 
+@app.route("/tabela")
+def tabela():
+    return render_template("tabela.html")
+
+
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
     item = request.form["item"]
