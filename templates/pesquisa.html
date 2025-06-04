@@ -1,36 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <title>Pesquisa de Compras</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-</head>
-<body>
-    <h1>Pesquisar Compras</h1>
-
-    <form method="POST" action="/pesquisa">
-        <input type="text" name="produto" placeholder="Digite o nome do produto" value="{{ produto }}" required />
-        <button type="submit">Buscar</button>
-    </form>
-
+<div class="resultados">
     {% if resultados %}
         <h2>Resultados para "{{ produto }}":</h2>
         <ul>
             {% for compra in resultados %}
                 <li>
-                    Produto: {{ compra.item }}<br/>
-                    Categoria: {{ compra.categoria }}<br/>
-                    Valor: R$ {{ '%.2f'|format(compra.valor) }}<br/>
-                    Local: {{ compra.local }}<br/>
-                    Data: {{ compra.data.strftime('%d/%m/%Y') if compra.data else 'N/A' }}
+                    <strong>Produto:</strong> {{ compra.item }}<br/>
+                    <strong>Categoria:</strong> {{ compra.categoria }}<br/>
+                    <strong>Valor:</strong> R$ {{ '%.2f'|format(compra.valor) }}<br/>
+                    <strong>Local:</strong> {{ compra.local }}<br/>
+                    <strong>Data:</strong> {{ compra.data.strftime('%d/%m/%Y') if compra.data else 'N/A' }}
                 </li>
             {% endfor %}
         </ul>
     {% elif produto %}
         <p>Nenhum resultado encontrado para "{{ produto }}"</p>
     {% endif %}
-
-    <a href="/">Voltar</a>
-</body>
-</html>
+</div>
