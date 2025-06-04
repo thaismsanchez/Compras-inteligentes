@@ -74,6 +74,30 @@ def tabela():
 
     return render_template('tabela.html', compras=compras)
 
+@app.route('/editar/<id>', methods=['GET', 'POST'])
+def editar(id):
+    doc_ref = db.collection('compras').document(id)
+    
+    if request.method == 'POST':
+        # Atualiza os dados
+        doc_ref.update({
+            'produto': request.form['produto'],
+            'preco': float(request.form['preco']),
+            'local': request.form['local'],
+            'data': firestore.SERVER_TIMESTAMP  # ou manter como está
+        })
+        return redirect(url_for('tabela'))  # ou outra página de destino
+
+    # Método GET: mostra os dados atuais no formulário
+    doc = doc_ref.get()
+    if doc.exists:
+        compra = doc.to_dict()
+        compra['id'] = doc.id
+        return render_template('editar.html', compra=compra)
+    else:
+        return 'Compra não encontrada', 404
+
+
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
     item = request.form["item"]
