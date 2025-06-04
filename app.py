@@ -2,18 +2,18 @@ from flask import Flask, render_template, request, redirect
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
-
-app = Flask(__name__)
-
 import os
 import json
 
+app = Flask(__name__)
+
+# Inicialização do Firebase a partir de variável de ambiente
 firebase_config = json.loads(os.environ["FIREBASE_CONFIG"])
 cred = credentials.Certificate(firebase_config)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-
+# Lista de categorias usadas no formulário
 CATEGORIAS = [
     "Laticínios", "Hortifruti", "Carnes", "Mercearia", 
     "Limpeza", "Higiene", "Bebidas", "Pet"
@@ -26,7 +26,6 @@ def index():
 @app.route("/tabela")
 def tabela():
     return render_template("tabela.html")
-
 
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
@@ -96,8 +95,8 @@ def pesquisa():
             compras = db.collection("compras").stream()
             for c in compras:
                 d = c.to_dict()
-                # Comparar com o nome do produto (minusculo)
-                if d["item"].lower() == produto:
+                # Busca parcial: verifica se o termo digitado está contido no nome do produto
+                if produto in d["item"].lower():
                     resultados.append(d)
 
     return render_template("pesquisa.html", resultados=resultados, produto=produto)
