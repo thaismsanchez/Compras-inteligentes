@@ -15,7 +15,7 @@ db = firestore.client()
 
 # Lista de categorias usadas no formulário
 CATEGORIAS = [
-    "Laticínios", "Hortifruti", "Carnes", "Mercearia", 
+    "Laticínios", "Hortifruti", "Carnes", "Mercearia",
     "Limpeza", "Higiene", "Bebidas", "Pet"
 ]
 
@@ -36,14 +36,30 @@ def tabela():
     for doc in compras_docs:
         data = doc.to_dict()
 
-        # Filtrar manualmente porque Firestore queries com múltiplos filtros podem ser limitados
+        # Garantir que data seja string 'YYYY-MM-DD'
+        data_raw = data.get('data')
+
+        data_str = ""
+        try:
+            if isinstance(data_raw, str):
+                data_str = data_raw
+            elif hasattr(data_raw, 'strftime'):
+                data_str = data_raw.strftime('%Y-%m-%d')
+            elif hasattr(data_raw, 'to_datetime'):
+                data_str = data_raw.to_datetime().strftime('%Y-%m-%d')
+        except Exception:
+            data_str = ""
+
+        data['data'] = data_str
+
+        # Aplicar filtros
         if filtro_item and filtro_item not in data.get('item', '').lower():
             continue
         if filtro_local and filtro_local not in data.get('local', '').lower():
             continue
-        if filtro_data:
+        if filtro_data and data_str:
             try:
-                data_compra = datetime.strptime(data.get('data'), '%Y-%m-%d').date()
+                data_compra = datetime.strptime(data_str, '%Y-%m-%d').date()
                 filtro_data_obj = datetime.strptime(filtro_data, '%Y-%m-%d').date()
                 if data_compra != filtro_data_obj:
                     continue
@@ -52,10 +68,11 @@ def tabela():
 
         compras.append(data)
 
-    # Ordenar por data desc (considerando string no formato yyyy-mm-dd)
+    # Ordenar por data decrescente (string no formato YYYY-MM-DD)
     compras.sort(key=lambda x: x.get('data', ''), reverse=True)
 
     return render_template('tabela.html', compras=compras)
+
 
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
@@ -70,7 +87,7 @@ def adicionar():
         "categoria": categoria,
         "valor": valor,
         "local": local,
-        "data": data.strftime('%Y-%m-%d')  # Salvar data como string
+        "data": data
     })
     return redirect("/")
 
@@ -132,4 +149,4 @@ def pesquisa():
     return render_template("pesquisa.html", resultados=resultados, produto=produto)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=3000, debug=True)
