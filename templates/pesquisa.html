@@ -1,5 +1,6 @@
 <!DOCTYPE html>  <html lang="pt-br">  
-<head>  
+<div class="form pesquisa">
+    <head>  
     <meta charset="UTF-8" />  
     <title>Pesquisa de Compras</title>  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  </head>  
@@ -8,6 +9,7 @@
     <input type="text" name="produto" placeholder="Digite o nome do produto" value="{{ produto }}" required />  
     <button type="submit">Buscar</button>  
 </form>  
+</div>
 <div class="resultados">
     {% if resultados %}
         <h2>Resultados para "{{ produto }}":</h2>
