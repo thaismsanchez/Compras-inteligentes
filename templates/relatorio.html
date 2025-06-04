@@ -4,25 +4,27 @@
   <meta charset="UTF-8">
   <title>Relatório de Preços</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 <body>
   <h1>Menor Preço por Item</h1>
-  <table border="1">
-    <tr>
-      <th>Item</th>
-      <th>Local mais barato</th>
-      <th>Preço (R$)</th>
-    </tr>
-    {% for item, (local, valor) in menores.items() %}
-    <tr>
-      <td>{{ item }}</td>
-      <td>{{ local }}</td>
-      <td>{{ "%.2f" | format(valor) }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+  <div class="relatorio-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Local mais barato</th>
+          <th>Preço (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item, (local, valor) in menores.items() %}
+        <tr>
+          <td data-label="Item">{{ item }}</td>
+          <td data-label="Local mais barato">{{ local }}</td>
+          <td data-label="Preço (R$)">{{ "%.2f" | format(valor) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   <br>
-  <a href="/">Voltar ao cadastro</a>
-</body>
-</html>
