@@ -21,10 +21,7 @@
   <main>
    <h3>Registrar Nova Compra</h3>
   <form action="/adicionar" method="POST">
-     <input type="text" name="item" list="itens-disponiveis" required>
-      </label>
-      <!-- O datalist será preenchido dinamicamente pelo JavaScript -->
-      <datalist id="itens-disponiveis"></datalist>
+      <label>Item: <input type="text" name="item" required></label><br>
     <label>Categoria:
       <select name="categoria">
         {% for cat in categorias %}
