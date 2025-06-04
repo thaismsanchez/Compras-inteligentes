@@ -20,21 +20,22 @@
   </header>
 
   <main>
-    <form id="compra-form">
-      <label for="item">Item:</label>
-      <input type="text" id="item" name="item" required />
-
-      <label for="categoria">Categoria:</label>
-      <select id="categoria" name="categoria">
-        <option value="laticinios">Laticínios</option>
-        <option value="hortifruti">Hortifruti</option>
-        <option value="carnes">Carnes</option>
-        <option value="mercearia">Mercearia</option>
-        <option value="limpeza">Limpeza</option>
-        <option value="higiene">Higiene</option>
-        <option value="bebidas">Bebidas</option>
-        <option value="pet">Pet</option>
+   <h1>Registrar Nova Compra</h1>
+  <form action="/adicionar" method="POST">
+    <label>Item: <input type="text" name="item" required></label><br>
+    <label>Categoria:
+      <select name="categoria">
+        {% for cat in categorias %}
+          <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
       </select>
+    </label><br>
+    <label>Valor (R$): <input type="text" name="valor" required></label><br>
+    <label>Local da Compra: <input type="text" name="local" required></label><br>
+    <label>Data: <input type="date" name="data" required></label><br>
+    <button type="submit">Salvar</button>
+  </form>
 
-      <label for="valor">Valor (R$):</label>
-      <input type="
+  <hr>
+</body>
+</html>
