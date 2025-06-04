@@ -23,9 +23,27 @@ CATEGORIAS = [
 def index():
     return render_template("index.html", categorias=CATEGORIAS)
 
+from flask import render_template, request
+from models import Compra  # ou o nome correto do seu modelo
+
 @app.route("/tabela")
 def tabela():
-    return render_template("tabela.html")
+    filtro_item = request.args.get("item", "")
+    filtro_local = request.args.get("local", "")
+    filtro_data = request.args.get("data", "")
+
+    query = Compra.query
+
+    if filtro_item:
+        query = query.filter(Compra.item.ilike(f"%{filtro_item}%"))
+    if filtro_local:
+        query = query.filter(Compra.local.ilike(f"%{filtro_local}%"))
+    if filtro_data:
+        query = query.filter(Compra.data == filtro_data)
+
+    compras = query.order_by(Compra.data.desc()).all()
+    return render_template("tabela.html", compras=compras)
+
 
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
