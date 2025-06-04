@@ -19,6 +19,11 @@ header {
   margin-bottom: 20px;
 }
 
+/* paragrafo */
+h1 {
+    text-align: center;
+}
+
 /* Formulário */
 form {
   background-color: #fff;
