@@ -54,6 +54,7 @@
           <td>{{ "%.2f"|format(compra.valor) }}</td>
           <td>{{ compra.local }}</td>
          <td>{{ compra.data }}</td>
+          <td><a href="{{ url_for('editar', id=compra.id) }}">Editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
