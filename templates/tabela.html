@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edição Estilo Excel com Firebase</title>
+  <!-- Inclua os scripts do Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+    
+    // Configuração do Firebase – substitua pelos dados do seu projeto!
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_PROJETO.firebaseapp.com",
+      projectId: "SEU_PROJETO_ID",
+      storageBucket: "SEU_PROJETO.appspot.com",
+      messagingSenderId: "SEU_MENSAGENSENDERID",
+      appId: "SUA_APPID"
+    };
+
+    // Inicializa o Firebase e o Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Função para carregar os dados e criar a tabela
+    async function loadData() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "itens"));
+        const tbody = document.getElementById("tbody-firebase");
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          const tr = document.createElement("tr");
+          tr.setAttribute("data-doc-id", docSnap.id);
+
+          // Cria célula para o campo "item"
+          const tdItem = document.createElement("td");
+          tdItem.contentEditable = true;  // Torna editável
+          tdItem.textContent = data.item;
+          tdItem.dataset.field = "item"; // Define qual campo será atualizado
+
+          // Cria célula para o campo "categoria"
+          const tdCategoria = document.createElement("td");
+          tdCategoria.contentEditable = true;
+          tdCategoria.textContent = data.categoria;
+          tdCategoria.dataset.field = "categoria";
+
+          tr.appendChild(tdItem);
+          tr.appendChild(tdCategoria);
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar os dados:", error);
+      }
+    }
+
+    // Atualiza o documento quando o usuário termina a edição (evento blur)
+    document.addEventListener("DOMContentLoaded", () => {
+      loadData();
+
+      // Delegação de evento para os campos editáveis
+      document.getElementById("tbody-firebase").addEventListener("blur", async (event) => {
+        if (event.target.nodeName.toLowerCase() === "td") {
+          const tr = event.target.closest("tr");
+          const docId = tr.getAttribute("data-doc-id");
+          const field = event.target.dataset.field;
+          const newValue = event.target.textContent;
+
+          try {
+            const docRef = doc(db, "itens", docId);
+            await updateDoc(docRef, { [field]: newValue });
+            console.log(`Campo ${field} do documento ${docId} atualizado para: ${newValue}`);
+          } catch (error) {
+            console.error("Erro ao atualizar o documento:", error);
+          }
+        }
+      }, true);
+    });
+  </script>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editar Dados estilo Excel</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Categoria</th>
+      </tr>
+    </thead>
+    <tbody id="tbody-firebase">
+      <!-- As linhas serão preenchidas dinamicamente -->
+    </tbody>
+  </table>
+</body>
+</html>
