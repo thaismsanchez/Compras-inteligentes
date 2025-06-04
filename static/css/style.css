@@ -24,6 +24,12 @@ h1 {
     text-align: center;
 }
 
+/* lista */
+.menu {
+  list-style-type: none; /* Remove os bullets */
+  padding-left: 0;        /* Remove o recuo da lista */
+}
+
 /* Formulário */
 form {
   background-color: #fff;
