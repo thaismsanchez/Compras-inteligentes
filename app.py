@@ -26,23 +26,40 @@ def index():
 from flask import render_template, request
 from models import Compra  # ou o nome correto do seu modelo
 
-@app.route("/tabela")
+@app.route('/tabela')
 def tabela():
-    filtro_item = request.args.get("item", "")
-    filtro_local = request.args.get("local", "")
+    filtro_item = request.args.get("item", "").lower()
+    filtro_local = request.args.get("local", "").lower()
     filtro_data = request.args.get("data", "")
 
-    query = Compra.query
+    compras_ref = db.collection('compras')
+    compras_docs = compras_ref.stream()
 
-    if filtro_item:
-        query = query.filter(Compra.item.ilike(f"%{filtro_item}%"))
-    if filtro_local:
-        query = query.filter(Compra.local.ilike(f"%{filtro_local}%"))
-    if filtro_data:
-        query = query.filter(Compra.data == filtro_data)
+    compras = []
+    for doc in compras_docs:
+        data = doc.to_dict()
 
-    compras = query.order_by(Compra.data.desc()).all()
-    return render_template("tabela.html", compras=compras)
+        # Filtrar manualmente porque Firestore queries com múltiplos filtros podem ser limitados
+        if filtro_item and filtro_item not in data.get('item', '').lower():
+            continue
+        if filtro_local and filtro_local not in data.get('local', '').lower():
+            continue
+        if filtro_data:
+            try:
+                data_compra = datetime.strptime(data.get('data'), '%Y-%m-%d').date()
+                filtro_data_obj = datetime.strptime(filtro_data, '%Y-%m-%d').date()
+                if data_compra != filtro_data_obj:
+                    continue
+            except Exception:
+                continue
+
+        compras.append(data)
+
+    # Ordenar por data desc (considerando string no formato yyyy-mm-dd)
+    compras.sort(key=lambda x: x.get('data', ''), reverse=True)
+
+    return render_template('tabela.html', compras=compras)
+
 
 
 @app.route("/adicionar", methods=["POST"])
