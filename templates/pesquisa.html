@@ -1,10 +1,11 @@
 <!DOCTYPE html>  <html lang="pt-br">  
-<div class="formpesquisa">
+
     <head>  
     <meta charset="UTF-8" />  
     <title>Pesquisa de Compras</title>  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  </head>  
 <body>  
+    <div class="formpesquisa">
     <h1>Pesquisar Compras</h1>  <form method="POST" action="/pesquisa">  
     <input type="text" name="produto" placeholder="Digite o nome do produto" value="{{ produto }}" required />  
     <button type="submit">Buscar</button>  
