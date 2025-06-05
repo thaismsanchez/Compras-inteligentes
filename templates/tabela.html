@@ -13,10 +13,12 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .filtro-form input {
       padding: 5px;
       flex: 1;
     }
+
     .filtro-form button {
       padding: 5px 10px;
     }
@@ -33,6 +35,26 @@
       background: #fff;
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .btn-editar {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background-color: #4CAF50;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    @media (min-width: 601px) {
+      .btn-editar {
+        background: none;
+        color: #4CAF50;
+        padding: 4px 8px;
+        border: none;
+      }
     }
 
     @media (max-width: 600px) {
@@ -63,29 +85,7 @@
       table td::before {
         content: attr(data-label);
         font-weight: bold;
-      }
-
-      .btn-editar {
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px 10px;
-        text-decoration: none;
-        border-radius: 4px;
-        font-size: 14px;
-      }
-    }
-
-    .btn-editar {
-      text-decoration: none;
-      color: #4CAF50;
-      font-weight: bold;
-    }
-
-    @media (min-width: 601px) {
-      .btn-editar {
-        padding: 4px 8px;
-        background: none;
-        border: none;
+        color: #444;
       }
     }
   </style>
@@ -113,7 +113,7 @@
   </div>
 
   <div class="relatorio-container">
-    <table id="tabela-compras">
+    <table id="tabela-compras" data-sort-order="asc">
       <thead>
         <tr>
           <th onclick="ordenarTabela(0)">Item</th>
