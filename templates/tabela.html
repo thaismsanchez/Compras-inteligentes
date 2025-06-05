@@ -20,7 +20,6 @@
     .filtro-form button {
       padding: 5px 10px;
     }
-
     th {
       cursor: pointer;
     }
@@ -73,7 +72,6 @@
           <th onclick="ordenarTabela(2)">Valor (R$)</th>
           <th onclick="ordenarTabela(3)">Local</th>
           <th onclick="ordenarTabela(4)">Data</th>
-          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -84,9 +82,7 @@
           <td data-label="Valor (R$)">{{ "%.2f"|format(compra.valor) }}</td>
           <td data-label="Local">{{ compra.local }}</td>
           <td data-label="Data">{{ compra.data }}</td>
-          <td data-label="Ações">
-            <a class="btn-editar" href="{{ url_for('editar', id=compra.id) }}">Editar</a>
-          </td>
+          <td><a href="{{ url_for('editar', id=compra.id) }}">Editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
