@@ -23,15 +23,25 @@
    <h3>Registrar Nova Compra</h3>
   <form action="/adicionar" method="POST">
       <label>Item: <input type="text" name="item" required></label><br>
-    <label>Categoria:
-      <select name="categoria">
-        {% for cat in categorias %}
-          <option value="{{ cat }}">{{ cat }}</option>
-        {% endfor %}
-      </select>
-    </label><br>
+   <!-- CATEGORIA COM SUGESTÕES E DIGITAÇÃO LIVRE -->
+<label>Categoria:
+  <input list="categorias" name="categoria" required>
+  <datalist id="categorias">
+    {% for cat in categorias %}
+      <option value="{{ cat }}">
+    {% endfor %}
+  </datalist>
+</label><br>
     <label>Valor (R$): <input type="text" name="valor" required></label><br>
-    <label>Local da Compra: <input type="text" name="local" required></label><br>
+    <!-- LOCAL COM SUGESTÕES E DIGITAÇÃO LIVRE -->
+<label>Local da Compra:
+  <input list="locais" name="local" required>
+  <datalist id="locais">
+    {% for loc in locais %}
+      <option value="{{ loc }}">
+    {% endfor %}
+  </datalist>
+</label><br>
     <label>Data: <input type="date" name="data" required></label><br>
     <button type="submit">Salvar</button>
   </form>
