@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tabela de Compras</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     .filtro-form {
       max-width: 600px;
@@ -24,30 +24,19 @@
       cursor: pointer;
     }
 
-    /* Estilizando o link "Editar" como botão */
-    .btn-editar {
-      display: inline-block;
-      padding: 6px 12px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.9rem;
-      transition: background-color 0.3s ease;
-    }
-    .btn-editar:hover {
-      background-color: #218838;
+    .ordenar-mobile {
+      display: none;
+      max-width: 600px;
+      margin: 10px auto;
+      padding: 10px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
 
-    /* Responsividade para o botão "Editar" no mobile */
     @media (max-width: 600px) {
-      .btn-editar {
+      .ordenar-mobile {
         display: block;
-        width: 100%;
-        text-align: center;
-        padding: 10px 0;
-        margin-top: 8px;
       }
     }
   </style>
@@ -56,11 +45,23 @@
   <h1>Tabela de Compras</h1>
 
   <form class="filtro-form" method="GET" action="/tabela">
-    <input type="text" name="item" placeholder="Filtrar por item" value="{{ request.args.get('item', '') }}" />
-    <input type="text" name="local" placeholder="Filtrar por local" value="{{ request.args.get('local', '') }}" />
-    <input type="date" name="data" value="{{ request.args.get('data', '') }}" />
+    <input type="text" name="item" placeholder="Filtrar por item" value="{{ request.args.get('item', '') }}">
+    <input type="text" name="local" placeholder="Filtrar por local" value="{{ request.args.get('local', '') }}">
+    <input type="date" name="data" value="{{ request.args.get('data', '') }}">
     <button type="submit">Filtrar</button>
   </form>
+
+  <!-- Menu de ordenação mobile -->
+  <div class="ordenar-mobile">
+    <label for="ordenar-select">Ordenar por:</label>
+    <select id="ordenar-select" onchange="ordenarTabela(this.value)">
+      <option value="0">Item</option>
+      <option value="1">Categoria</option>
+      <option value="2">Valor (R$)</option>
+      <option value="3">Local</option>
+      <option value="4">Data</option>
+    </select>
+  </div>
 
   <div class="relatorio-container">
     <table id="tabela-compras">
@@ -71,7 +72,6 @@
           <th onclick="ordenarTabela(2)">Valor (R$)</th>
           <th onclick="ordenarTabela(3)">Local</th>
           <th onclick="ordenarTabela(4)">Data</th>
-          <th>Editar</th>
         </tr>
       </thead>
       <tbody>
@@ -82,9 +82,7 @@
           <td data-label="Valor (R$)">{{ "%.2f"|format(compra.valor) }}</td>
           <td data-label="Local">{{ compra.local }}</td>
           <td data-label="Data">{{ compra.data }}</td>
-          <td data-label="Editar">
-            <a class="btn-editar" href="{{ url_for('editar', id=compra.id) }}">Editar</a>
-          </td>
+          <td><a href="{{ url_for('editar', id=compra.id) }}">Editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
