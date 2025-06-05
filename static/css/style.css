@@ -5,7 +5,6 @@
   padding: 0;
 }
 
-/* Estilo do corpo */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -13,30 +12,11 @@ body {
   padding: 20px;
 }
 
-/* Cabeçalho */
-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-/* Parágrafos e títulos */
-h1, h2, h3 {
+h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Main */
-main {
-  margin-top: 30px;
-}
-
-/* Lista */
-.menu {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-/* Formulário */
 form {
   background-color: #fff;
   padding: 20px;
@@ -76,47 +56,6 @@ form button:hover {
   background-color: #218838;
 }
 
-
-/* Formulário de pesquisa com layout semelhante aos resultados */
-.formpesquisa {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 600px;
-  margin: 30px auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-/* Resultados da pesquisa */
-.resultados {
-  margin-top: 30px;
-}
-
-.resultados h2,
-.resultados p {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.resultados ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 auto;
-  max-width: 600px;
-}
-
-.resultados li {
-  background-color: #fff;
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  line-height: 1.5;
-}
-
-/* Link de voltar */
 a[href="/"] {
   display: block;
   text-align: center;
@@ -130,7 +69,6 @@ a[href="/"]:hover {
   text-decoration: underline;
 }
 
-/* Relatório */
 .relatorio-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -154,62 +92,59 @@ th, td {
 th {
   background-color: #28a745;
   color: white;
+  cursor: pointer;
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Responsividade geral */
+.btn-editar {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-editar:hover {
+  background-color: #218838;
+}
+
+/* RESPONSIVO ESPECÍFICO PARA A TABELA */
 @media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-
-  form {
-    padding: 15px;
-  }
-
-  .resultados li {
-    padding: 12px;
-    font-size: 0.95rem;
-  }
-
-  .resultados ul {
-    padding: 0 10px;
-  }
-
-  /* Tabela responsiva */
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  thead {
+  .relatorio-container table thead {
     display: none;
   }
 
-  tr {
-    margin-bottom: 20px;
+  .relatorio-container table tbody tr {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
-    padding: 10px;
+    margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
-  td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
+  .relatorio-container table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border: none;
+    font-size: 14px;
   }
 
-  td::before {
+  .relatorio-container table td::before {
     content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
     font-weight: bold;
-    text-align: left;
+    color: #444;
+    margin-right: 10px;
+  }
+
+  .relatorio-container td[data-label="Ações"] {
+    justify-content: center;
+    margin-top: 10px;
   }
 }
