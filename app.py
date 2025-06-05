@@ -35,7 +35,7 @@ def index():
         if item:
             itens_unicos.add(item)
 
-     data_atual = datetime.now().strftime("%Y-%m-%d")  # formato HTML5 date input
+    data_atual = datetime.now().strftime("%Y-%m-%d")  # formato HTML5 date input
 
 
     return render_template(
