@@ -22,7 +22,16 @@
   <main>
    <h3>Registrar Nova Compra</h3>
   <form action="/adicionar" method="POST">
-      <label>Item: <input type="text" name="item" required></label><br>
+     <!-- ITEM COM SUGESTÕES E DIGITAÇÃO LIVRE -->
+<label>Item:
+  <input list="itens" name="item" required>
+  <datalist id="itens">
+    {% for nome in itens %}
+      <option value="{{ nome }}">
+    {% endfor %}
+  </datalist>
+</label><br>
+
    <!-- CATEGORIA COM SUGESTÕES E DIGITAÇÃO LIVRE -->
 <label>Categoria:
   <input list="categorias" name="categoria" required>
