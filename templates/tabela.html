@@ -13,12 +13,10 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .filtro-form input {
       padding: 5px;
       flex: 1;
     }
-
     .filtro-form button {
       padding: 5px 10px;
     }
@@ -37,55 +35,9 @@
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
 
-    .btn-editar {
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      background-color: #4CAF50;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-size: 14px;
-      display: inline-block;
-    }
-
-    @media (min-width: 601px) {
-      .btn-editar {
-        background: none;
-        color: #4CAF50;
-        padding: 4px 8px;
-        border: none;
-      }
-    }
-
     @media (max-width: 600px) {
       .ordenar-mobile {
         display: block;
-      }
-
-      table thead {
-        display: none;
-      }
-
-      table tbody tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #f9f9f9;
-      }
-
-      table td {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-        border: none;
-      }
-
-      table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #444;
       }
     }
   </style>
@@ -113,7 +65,7 @@
   </div>
 
   <div class="relatorio-container">
-    <table id="tabela-compras" data-sort-order="asc">
+    <table id="tabela-compras">
       <thead>
         <tr>
           <th onclick="ordenarTabela(0)">Item</th>
