@@ -21,22 +21,26 @@ CATEGORIAS = [
 
 @app.route("/")
 def index():
-    # Buscar locais únicos do Firestore
+    # Buscar locais e itens únicos do Firestore
     compras_docs = db.collection("compras").stream()
     locais_unicos = set()
+    itens_unicos = set()
 
     for doc in compras_docs:
         data = doc.to_dict()
         local = data.get("local", "").strip()
+        item = data.get("item", "").strip()
         if local:
             locais_unicos.add(local)
+        if item:
+            itens_unicos.add(item)
 
     return render_template(
         "index.html",
         categorias=CATEGORIAS,
-        locais=sorted(locais_unicos)
+        locais=sorted(locais_unicos),
+        itens=sorted(itens_unicos)
     )
-
 @app.route("/tabela")
 def tabela():
     filtro_item = request.args.get("item", "").lower()
