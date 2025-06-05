@@ -111,10 +111,29 @@ def editar(id):
         compra["id"] = doc.id
         if isinstance(compra.get("data"), datetime):
             compra["data"] = compra["data"].strftime("%Y-%m-%d")
-        return render_template("editar.html", compra=compra, categorias=CATEGORIAS)
+
+        # Coletar sugestões para datalists
+        compras_docs = db.collection("compras").stream()
+        locais_unicos = set()
+        itens_unicos = set()
+        categorias_unicas = set()
+
+        for d in compras_docs:
+            dados = d.to_dict()
+            locais_unicos.add(dados.get("local", "").strip())
+            itens_unicos.add(dados.get("item", "").strip())
+            categorias_unicas.add(dados.get("categoria", "").strip())
+
+        return render_template(
+            "editar.html",
+            compra=compra,
+            locais=sorted(locais_unicos),
+            itens=sorted(itens_unicos),
+            categorias=sorted(categorias_unicas)
+        )
     else:
         return "Compra não encontrada", 404
-
+        
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
     item = request.form["item"]
