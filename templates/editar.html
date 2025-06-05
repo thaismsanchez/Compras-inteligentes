@@ -9,21 +9,37 @@
 <body>
     <h1>Editar Compra</h1>
     <form method="POST">
+      <!-- PRODUTO COM DATALIST -->
         <label for="item">Produto:</label>
-        <input type="text" id="item" name="item" value="{{ compra.item }}" required /><br />
-
-        <label for="categoria">Categoria:</label>
-        <select id="categoria" name="categoria" required>
-            {% for cat in categorias %}
-                <option value="{{ cat }}" {% if compra.categoria == cat %}selected{% endif %}>{{ cat }}</option>
+        <input list="itens" id="item" name="item" value="{{ compra.item }}" required>
+        <datalist id="itens">
+            {% for nome in itens %}
+                <option value="{{ nome }}">
             {% endfor %}
-        </select><br />
+        </datalist><br />
+
+        <!-- CATEGORIA COM DATALIST -->
+        <label for="categoria">Categoria:</label>
+        <input list="categorias" id="categoria" name="categoria" value="{{ compra.categoria }}" required>
+        <datalist id="categorias">
+            {% for cat in categorias %}
+                <option value="{{ cat }}">
+            {% endfor %}
+        </datalist><br />
+
 
         <label for="valor">Preço:</label>
         <input type="number" step="0.01" id="valor" name="valor" value="{{ compra.valor }}" required /><br />
 
+    <!-- LOCAL COM DATALIST -->
         <label for="local">Local:</label>
-        <input type="text" id="local" name="local" value="{{ compra.local }}" required /><br />
+        <input list="locais" id="local" name="local" value="{{ compra.local }}" required>
+        <datalist id="locais">
+            {% for nome in locais %}
+                <option value="{{ nome }}">
+            {% endfor %}
+        </datalist><br />
+
 
         <label for="data">Data:</label>
         <input type="date" id="data" name="data" value="{{ compra.data }}" required /><br />
