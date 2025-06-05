@@ -35,11 +35,15 @@ def index():
         if item:
             itens_unicos.add(item)
 
+     data_atual = datetime.now().strftime("%Y-%m-%d")  # formato HTML5 date input
+
+
     return render_template(
         "index.html",
         categorias=CATEGORIAS,
         locais=sorted(locais_unicos),
         itens=sorted(itens_unicos)
+        data_atual=data_atual  # <-- adiciona aqui
     )
 @app.route("/tabela")
 def tabela():
