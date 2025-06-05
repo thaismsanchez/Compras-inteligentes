@@ -42,7 +42,7 @@ def index():
         "index.html",
         categorias=CATEGORIAS,
         locais=sorted(locais_unicos),
-        itens=sorted(itens_unicos)
+        itens=sorted(itens_unicos),
         data_atual=data_atual  # <-- adiciona aqui
     )
 @app.route("/tabela")
