@@ -129,7 +129,9 @@ def relatorio():
     for item, valores in precos.items():
         menores[item] = min(valores, key=lambda x: x[1])
 
-    return render_template("relatorio.html", menores=menores)
+    menores_ordenados = dict(sorted(menores.items()))  # ordena por nome do item (alfabética)
+return render_template("relatorio.html", menores=menores_ordenados)
+
 
 @app.route("/lista", methods=["GET", "POST"])
 def lista():
